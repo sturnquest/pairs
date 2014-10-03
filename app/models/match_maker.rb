@@ -18,7 +18,6 @@ class MatchMaker
 
         second_row = Array.new(@emails)
         shifts.times { second_row << second_row.shift }
-        #week_schedule << [@emails, second_row]
         @emails.each_with_index do |top_row_email, index|
           weekly_pairs << [top_row_email, second_row[index]]
         end
