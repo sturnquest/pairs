@@ -1,0 +1,7 @@
+{
+    "The Beatles": ["paul@macartney.org", "john@lennon.com", "george@harrison.org", "ringo@starr.org"],
+    "The Quarrymen": ["paul@macartney.org", "john@lennon.com", "stu@sutcliffe.org"],
+    "Wings": ["paul@macartney.org", "linda@macartney.org"],
+    "Plastic Ono Band": ["john@lennon.com", "yoko@ono.org"],
+    "Traveling Wilburys": ["george@harrison.org", "tom@petty.org", "roy@orbison.org"]
+}
