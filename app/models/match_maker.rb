@@ -7,18 +7,20 @@ class MatchMaker
   end
 
   # create a matrix that represents the schedule for all unique pairs
-  # e.g. for ['a', 'b', 'c'] the unique pairs are [['a', 'b'], ['b', 'c'], ['c', 'a']] and [['a', 'c'], ['b', 'a'], ['c', 'a']]
+  # e.g. for ['a', 'b', 'c'] the unique pairs are [['a', 'c'], ['b', 'n/a']] and [['a', 'n/a'], ['b', 'c']]
   def schedule
     unless (@schedule)
       schedule = []
+      emails = @emails
+      emails << 'n/a' if @emails.size.odd?
 
-
-      (1...@emails.size).each do |shifts|
+      top_row = emails[0...(emails.size/2)]
+      (0...top_row.size).each do |shifts|
         weekly_pairs = []
+        second_row = emails[(emails.size/2)...emails.size]
 
-        second_row = Array.new(@emails)
-        shifts.times { second_row << second_row.shift }
-        @emails.each_with_index do |top_row_email, index|
+        shifts.times {second_row << second_row.shift}
+        top_row.each_with_index do |top_row_email, index|
           weekly_pairs << [top_row_email, second_row[index]]
         end
 

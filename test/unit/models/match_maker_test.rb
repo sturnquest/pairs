@@ -13,22 +13,31 @@ class MatchMakerTest < ActiveSupport::TestCase
 
     match_maker = MatchMaker.seed(organiztion)
     expected_emails = ['george@harrison.org', 'john@lennon.com', 'linda@macartney.org', 'paul@macartney.org', 'ringo@starr.org', 'roy@orbison.org', 'stu@sutcliffe.org', 'tom@petty.org', 'yoko@ono.org']
+    puts expected_emails.size
     assert_equal(expected_emails, match_maker.emails)
   end
 
-  test "schedule creation" do
-    expected_schedule = [[%w[a b], %w[b c], %w[c a]], [%w[a c], %w[b a], %w[c b]]]
+  test "schedule creation for odd numer of team members" do
+    expected_schedule = [[%w[a c], %w[b n/a]], [%w[a n/a], %w[b c]]]
     assert_equal expected_schedule, MatchMaker.new(%w[a b c]).schedule
   end
 
-  test "pair for each week" do
-    week_0_pairs = [%w[a b], %w[b c], %w[c a]]
-    week_1_pairs = [%w[a c], %w[b a], %w[c b]]
+  test "schedule creation for even numer of team members" do
+    expected_schedule = [[%w[a c], %w[b d]], [%w[a d], %w[b c]]]
+    assert_equal expected_schedule, MatchMaker.new(%w[a b c d]).schedule
+  end
 
-    assert_equal week_0_pairs, MatchMaker.new(%w[a b c]).pairs(0)
-    assert_equal week_1_pairs, MatchMaker.new(%w[a b c]).pairs(1)
-    assert_equal week_0_pairs, MatchMaker.new(%w[a b c]).pairs(2)
-    assert_equal week_1_pairs, MatchMaker.new(%w[a b c]).pairs(3)
+  test "pair for each week" do
+    week_0_pairs = [%w[a d], %w[b e], %w[c f]]
+    week_1_pairs = [%w[a e], %w[b f], %w[c d]]
+    week_2_pairs = [%w[a f], %w[b d], %w[c e]]
+
+    assert_equal week_0_pairs, MatchMaker.new(%w[a b c d e f]).pairs(0)
+    assert_equal week_1_pairs, MatchMaker.new(%w[a b c d e f]).pairs(1)
+    assert_equal week_2_pairs, MatchMaker.new(%w[a b c d e f]).pairs(2)
+    assert_equal week_0_pairs, MatchMaker.new(%w[a b c d e f]).pairs(3)
+    assert_equal week_1_pairs, MatchMaker.new(%w[a b c d e f]).pairs(4)
+    assert_equal week_2_pairs, MatchMaker.new(%w[a b c d e f]).pairs(5)
   end
 
 
